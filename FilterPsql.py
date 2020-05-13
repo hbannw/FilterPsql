@@ -13,6 +13,7 @@ group1.add_argument('-d','--date', help='date pattern to search for, the binary 
 group1.add_argument('-b','--binary', help='binary pattern to search for, in hex format (4239 for "B9") (in the fixed record part) ',type=str)
 parser.add_argument('-op','--operation', help='operation to check lines available operations : gt ge lt le eq ne (defaut "ge") ', dest ='op', type = str,default = 'ge')
 parser.add_argument('-pos','--position', help='pattern position from the beginning of the record (comma = 0) (default 2)',type = int,default = 2)
+parser.add_argument('-df','--date_format', help='date format for -d option (default %%d/%%m/%%Y)',type = str,default = '%d/%m/%Y')
 parser.add_argument('-t','--test_only', help='tests input file only',action = 'store_true')
 parser.add_argument("-v", "--verbose",help = 'increase verbosity', action="store_true")
 args = parser.parse_args()
@@ -33,7 +34,7 @@ posit = args.position
 if args.date<>None:
   isdate = True
   try:
-    keydate = datetime.strptime(args.date,'%d/%m/%Y')
+    keydate = datetime.strptime(args.date,args.date_format)
   except:
     print ('error : incorrect date pattern : '+args.date)
     exit()
